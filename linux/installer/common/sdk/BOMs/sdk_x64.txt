@@ -31,6 +31,7 @@ DeliveryName	InstallName	FileCheckSum	FileFeature	FileOwner
 <deliverydir>/build/linux/libsgx_uprotected_fs.a	<installdir>/package/lib64/libsgx_uprotected_fs.a	0	main	STP
 <deliverydir>/build/linux/libsgx_tprotected_fs.a	<installdir>/package/lib64/libsgx_tprotected_fs.a	0	main	STP
 <deliverydir>/build/linux/libsgx_pcl.a	<installdir>/package/lib64/libsgx_pcl.a	0	main	STP
+<deliverydir>/build/linux/libsgx_mage.a	<installdir>/package/lib64/libsgx_mage.a	0	main	STP
 <deliverydir>/build/linux/libsgx_pclsim.a	<installdir>/package/lib64/libsgx_pclsim.a	0	main	STP
 <deliverydir>/build/linux/libsgx_urts_deploy.so	<installdir>/package/lib64/libsgx_urts.so	0	main	STP
 <deliverydir>/build/linux/libsgx_urts_sim.so	<installdir>/package/lib64/libsgx_urts_sim.so	0	main	STP

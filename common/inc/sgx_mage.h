@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2021 Intel Corporation. All rights reserved.
+ * Copyright (C) 2011-2019 Intel Corporation. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -29,39 +29,38 @@
  *
  */
 
-#ifndef _SECTION_H_
-#define _SECTION_H_
 
-#include "arch.h"    // for `si_flag_t' etc.
+#ifndef _SGX_MAGE_H_
+#define _SGX_MAGE_H_
 
-#include "uncopyable.h"
-#include <stdint.h>
-
-class Section : private Uncopyable
-{
-public:
-    Section(const uint8_t* start_addr, uint64_t size, uint64_t virt_size,
-            uint64_t rva, int64_t offset, si_flags_t sf);
-    ~Section();
-
-    const uint8_t* raw_data(void) const;
-    uint64_t raw_data_size(void) const;
-
-    uint64_t get_rva(void) const;
-    uint64_t get_offset(void) const;
-    // The virtual size is rounded to align with 1-page.
-    uint64_t virtual_size(void) const;
-
-    si_flags_t get_si_flags(void) const;
-
-private:
-    const uint8_t*  m_start_addr;
-    uint64_t        m_raw_data_size;
-    uint64_t        m_rva;
-    uint64_t        m_offset;
-    uint64_t        m_virtual_size;
-    si_flags_t      m_si_flag;
-};
-
+#ifdef __cplusplus
+extern "C" {
 #endif
 
+#define SGX_MAGE_SEC_NAME ".sgx_mage"
+#define SGX_MAGE_SEC_SIZE 4096
+// must be a multiple of 4096 (page size)
+
+typedef struct _sgx_mage_entry_t
+{
+    uint64_t size;              // number of blocks updated
+    uint64_t offset;            // offset of sgx_mage section
+    uint8_t digest[32];         // sha-256 internal state
+} sgx_mage_entry_t;
+
+typedef struct _sgx_mage_t
+{
+    uint64_t size;
+    sgx_mage_entry_t entries[];
+} sgx_mage_t;
+
+uint8_t sgx_mage_get_size();
+sgx_status_t sgx_mage_derive_measurement(uint64_t mage_idx, sgx_measurement_t *mr);
+
+uint8_t* get_sgx_mage_sec_buf_addr();
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif
