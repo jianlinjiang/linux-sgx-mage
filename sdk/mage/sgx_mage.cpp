@@ -15,7 +15,7 @@ extern "C" {
 
 const uint8_t __attribute__((section(SGX_MAGE_SEC_NAME))) sgx_mage_sec_buf[SGX_MAGE_SEC_SIZE] __attribute__((aligned (SE_PAGE_SIZE))) = {0};
 
-uint8_t sgx_mage_get_size()
+uint64_t sgx_mage_get_size()
 {
     uint8_t* sgx_mage_sec_addr = get_sgx_mage_sec_buf_addr();
     sgx_mage_t* mage_hdr = (sgx_mage_t*)sgx_mage_sec_addr;

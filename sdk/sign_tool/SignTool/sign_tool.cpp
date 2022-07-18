@@ -1445,7 +1445,7 @@ int main(int argc, char* argv[])
             se_trace(SE_TRACE_ERROR, OVERALL_ERROR);
             goto clear_return;
         }
-        magein_t->place_holder = 0x1434;
+        
         magein_t->size = magein_size / sizeof(sgx_mage_entry_t);
         if(read_file_to_buf(path[MAGEIN], (uint8_t*)magein_t->entries, magein_size) == false)
         {

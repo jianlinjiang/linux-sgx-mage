@@ -54,7 +54,7 @@ typedef struct _sgx_mage_t
     sgx_mage_entry_t entries[];
 } sgx_mage_t;
 
-uint8_t sgx_mage_get_size();
+uint64_t sgx_mage_get_size();
 sgx_status_t sgx_mage_derive_measurement(uint64_t mage_idx, sgx_measurement_t *mr);
 
 uint8_t* get_sgx_mage_sec_buf_addr();
