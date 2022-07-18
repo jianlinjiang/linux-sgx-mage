@@ -40,7 +40,6 @@ extern "C" {
 #define SGX_MAGE_SEC_NAME ".sgx_mage"
 #define SGX_MAGE_SEC_SIZE 4096
 // must be a multiple of 4096 (page size)
-
 typedef struct _sgx_mage_entry_t
 {
     uint64_t size;              // number of blocks updated
@@ -50,6 +49,7 @@ typedef struct _sgx_mage_entry_t
 
 typedef struct _sgx_mage_t
 {
+    // uint32_t plcae_holder;
     uint64_t size;
     sgx_mage_entry_t entries[];
 } sgx_mage_t;

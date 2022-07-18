@@ -11,18 +11,19 @@
 #define HANDLE_HASH_OFFSET 168
 #define SHA256_DIGEST_SIZE 32
 
-extern "C" {
+// extern "C" {
 
-const uint8_t __attribute__((section(SGX_MAGE_SEC_NAME))) sgx_mage_sec_buf[SGX_MAGE_SEC_SIZE] __attribute__((aligned (SE_PAGE_SIZE))) = {0};
+const uint8_t __attribute__((section(SGX_MAGE_SEC_NAME))) sgx_mage_sec_buf[SGX_MAGE_SEC_SIZE] __attribute__((aligned (SE_PAGE_SIZE))) = { 0 };
 
 uint64_t sgx_mage_get_size()
 {
-    uint8_t* sgx_mage_sec_addr = get_sgx_mage_sec_buf_addr();
-    sgx_mage_t* mage_hdr = (sgx_mage_t*)sgx_mage_sec_addr;
-    if (mage_hdr->size * sizeof(sgx_mage_entry_t) + sizeof(sgx_mage_t) > SGX_MAGE_SEC_SIZE) {
+    uint8_t* source = reinterpret_cast<uint8_t*>(reinterpret_cast<uint64_t>(sgx_mage_sec_buf));
+    uint64_t size = 0;
+    memcpy(&size, source, sizeof(uint64_t));
+    if (size * sizeof(sgx_mage_entry_t) + sizeof(sgx_mage_t) > SGX_MAGE_SEC_SIZE) {
         return 0;
     }
-    return mage_hdr->size;
+    return size;
 }
 
 sgx_status_t sgx_mage_derive_measurement(uint64_t mage_idx, sgx_measurement_t *mr)
@@ -118,4 +119,4 @@ uint8_t* get_sgx_mage_sec_buf_addr()
     return reinterpret_cast<uint8_t*>(reinterpret_cast<uint64_t>(sgx_mage_sec_buf));
 }
 
-}
+// }
