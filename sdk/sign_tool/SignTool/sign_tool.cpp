@@ -221,6 +221,11 @@ static bool measure_enclave(uint8_t *hash, const char *dllpath, const xml_parame
         return false;
     }
 
+    // set isvinfo in enclave creator
+    uint64_t isv_svn = parameter[ISVSVN].value;
+    uint64_t isv_prodid = parameter[PRODID].value;
+    dynamic_cast<EnclaveCreatorST*>(get_enclave_creator())->set_enclave_isvinfo(isv_svn, isv_prodid);
+
     // Load enclave to get enclave hash
     int ret = load_enclave(parser.release(), metadata);
     close_handle(fh);
@@ -1415,6 +1420,7 @@ int main(int argc, char* argv[])
         }
         mage_t.offset = mage_rva;
 
+        se_trace(SE_TRACE_ERROR, "%lu %lu", mage_t.isv_svn, mage_t.isv_prodid);
         se_trace(SE_TRACE_DEBUG, "Writing to file %s. ", path[MAGEOUT]);
         if(write_data_to_file(path[MAGEOUT], std::ios::binary|std::ios::out|std::ios::app, reinterpret_cast<uint8_t*>(&mage_t), sizeof(mage_t), 0) == false)
         {
@@ -1439,7 +1445,7 @@ int main(int argc, char* argv[])
             se_trace(SE_TRACE_ERROR, OVERALL_ERROR);
             goto clear_return;
         }
-        se_trace(SE_TRACE_DEBUG, "read size %lu from file %s .", magein_size, path[MAGEIN]);
+        se_trace(SE_TRACE_ERROR, "read size %lu from file %s .", magein_size, path[MAGEIN]);
         sgx_mage_t *magein_t = (sgx_mage_t *)malloc(magein_t_size);
         if (magein_t == NULL) {
             se_trace(SE_TRACE_ERROR, OVERALL_ERROR);

@@ -14,7 +14,7 @@ cd /opt/intel
 yes yes | sudo ${SCRIPT_PATH}/linux/installer/bin/sgx_linux_x64_sdk_*.bin
 cd -
 
-Compile PSW and install
+#Compile PSW and install
 make deb_psw_pkg 
 cd linux/installer/deb/libsgx-urts 
 dpkg -i libsgx-urts*.deb

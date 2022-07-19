@@ -92,5 +92,25 @@ uint32_t e2_ecall_main()
         printf("\n");
     }
 
+    printf("\nget measurement by isv_svn and isv_prodid\n");
+    // derive measurment by isvsvn and prod id
+    // see isv svn and proid in Enclave.config.xml
+    ret =  sgx_mage_derive_measurement_by_isvinfo(1UL, 1UL, &mr);
+    if (ret == SGX_ERROR_INVALID_PARAMETER) {
+        printf("can't find isv svn %lu and isv prodid %lu \n", 1UL, 1UL);
+    }
+    printf("enclave isvsvn %lu, prodid %lu, it's measurement:\n", 1UL, 1UL);
+    for (uint64_t j = 0; j < sizeof(mr.m); j++)
+            printf("%02x", mr.m[j]);
+    printf("\n");
+
+    if (SGX_SUCCESS != sgx_mage_derive_measurement_by_isvinfo(1UL, 3UL, &mr)) {
+        printf("failed to generate second mage measurement\n");
+    }
+    printf("enclave isvsvn %lu, prodid %lu, it's measurement:\n", 1UL, 3UL);
+    for (uint64_t j = 0; j < sizeof(mr.m); j++)
+            printf("%02x", mr.m[j]);
+    printf("\n");
+
     return ret;
 }

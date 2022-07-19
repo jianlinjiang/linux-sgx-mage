@@ -357,6 +357,11 @@ int EnclaveCreatorST::remove_range(uint64_t fromaddr, uint64_t numpages)
     return SGX_SUCCESS;
 }
 
+void EnclaveCreatorST::set_enclave_isvinfo(uint64_t isv_svn, uint64_t isv_prodid)
+{
+    m_mage.isv_svn = isv_svn;
+    m_mage.isv_prodid = isv_prodid;
+}
 
 static EnclaveCreatorST g_enclave_creator_st;
 EnclaveCreator* g_enclave_creator = &g_enclave_creator_st;

@@ -76,7 +76,7 @@ public:
     int trim_range(uint64_t fromaddr, uint64_t toaddr);
     int trim_accept(uint64_t addr);
     int remove_range(uint64_t fromaddr, uint64_t numpages);
-
+    void set_enclave_isvinfo(uint64_t isv_svn, uint64_t isv_prodid);
 private:
     uint8_t m_enclave_hash[SGX_HASH_SIZE];
     EVP_MD_CTX  *m_ctx;

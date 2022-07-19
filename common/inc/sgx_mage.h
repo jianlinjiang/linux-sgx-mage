@@ -44,6 +44,8 @@ typedef struct _sgx_mage_entry_t
 {
     uint64_t size;              // number of blocks updated
     uint64_t offset;            // offset of sgx_mage section
+    uint64_t isv_svn;           // enclave isv svn
+    uint64_t isv_prodid;        // enclave isv prodid
     uint8_t digest[32];         // sha-256 internal state
 } sgx_mage_entry_t;
 
@@ -56,7 +58,7 @@ typedef struct _sgx_mage_t
 
 uint64_t sgx_mage_get_size();
 sgx_status_t sgx_mage_derive_measurement(uint64_t mage_idx, sgx_measurement_t *mr);
-
+sgx_status_t sgx_mage_derive_measurement_by_isvinfo(uint64_t isv_svn, uint64_t isv_prodid, sgx_measurement_t *mr);
 uint8_t* get_sgx_mage_sec_buf_addr();
 
 #ifdef __cplusplus
