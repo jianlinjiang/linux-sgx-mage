@@ -1420,7 +1420,6 @@ int main(int argc, char* argv[])
         }
         mage_t.offset = mage_rva;
 
-        se_trace(SE_TRACE_ERROR, "%lu %lu", mage_t.isv_svn, mage_t.isv_prodid);
         se_trace(SE_TRACE_DEBUG, "Writing to file %s. ", path[MAGEOUT]);
         if(write_data_to_file(path[MAGEOUT], std::ios::binary|std::ios::out|std::ios::app, reinterpret_cast<uint8_t*>(&mage_t), sizeof(mage_t), 0) == false)
         {
